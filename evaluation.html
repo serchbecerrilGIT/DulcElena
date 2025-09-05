@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Evaluation - Certigma</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Course Evaluation</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="demo-course-1.html">Demo Course</a>
+            <a href="evaluation.html">Evaluation</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Tell Us What You Think!</h2>
+        <form>
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="rating">How would you rate this course?</label>
+            <select id="rating" name="rating">
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Good</option>
+                <option value="3">3 - Average</option>
+                <option value="2">2 - Fair</option>
+                <option value="1">1 - Poor</option>
+            </select>
+
+            <label for="comments">Additional Comments:</label>
+            <textarea id="comments" name="comments" rows="5"></textarea>
+
+            <button type="submit">Submit Evaluation</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Certigma. All rights reserved.</p>
+    </footer>
+</body>
+</html>
