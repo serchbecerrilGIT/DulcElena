@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Certigma</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="demo-course-1.html">Demo Course</a>
+            <a href="evaluation.html">Evaluation</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="dashboard.html">Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Course Evaluations & Quiz Results</h2>
+        
+        <section id="quiz-results-section">
+            <h3>Quiz Results</h3>
+            <p>Your quiz scores are stored locally in this browser. They are not sent to a server.</p>
+            <table id="quiz-results-table">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+            <button id="clear-results-btn" class="button" style="margin-top:1rem;">Clear Results</button>
+        </section>
+
+        <section id="evaluation-notes">
+            <h3>Evaluation Form Notes</h3>
+            <p>The evaluation form on the Evaluation page requires a backend server (like Azure Functions) to collect and store the data. For this static site, the form is a visual demonstration only.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Certigma. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function loadQuizResults() {
+            const results = JSON.parse(localStorage.getItem('quizResults')) || [];
+            const tableBody = document.querySelector('#quiz-results-table tbody');
+            tableBody.innerHTML = '';
+            
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const row = tableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${result.timestamp}</td>
+                        <td>${result.score} / ${questions.length}</td>
+                    `;
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="2">No quiz results found.</td></tr>';
+            }
+        }
+
+        document.getElementById('clear-results-btn').addEventListener('click', () => {
+            localStorage.removeItem('quizResults');
+            loadQuizResults();
+        });
+
+        // The 'questions' array is needed here for total score
+        const questions = [
+            { question: "...", answer: 1 },
+            { question: "...", answer: 2 },
+            { question: "...", answer: 1 },
+            { question: "...", answer: 2 },
+            { question: "...", answer: 1 }
+        ];
+
+        loadQuizResults();
+    </script>
+</body>
+</html>
