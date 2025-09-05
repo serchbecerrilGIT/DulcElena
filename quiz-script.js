@@ -1,31 +1,31 @@
 const questions = [
     {
-        question: "What is HTML used for?",
-        options: ["Styling web pages", "Creating website structure", "Adding interactivity"],
-        answer: 1, // Index of the correct answer
-        timer: 15 // Time limit in seconds
+        question: "¿Para qué se utiliza HTML?",
+        options: ["Para estilizar páginas web", "Para crear la estructura del sitio web", "Para agregar interactividad"],
+        answer: 1, // Índice de la respuesta correcta
+        timer: 15 // Límite de tiempo en segundos
     },
     {
-        question: "Which programming language adds interactivity to a website?",
+        question: "¿Qué lenguaje de programación agrega interactividad a un sitio web?",
         options: ["HTML", "CSS", "JavaScript"],
         answer: 2,
         timer: 15
     },
     {
-        question: "What does CSS stand for?",
-        options: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Syntax"],
+        question: "¿Qué significa CSS?",
+        options: ["Hojas de estilo creativas", "Hojas de estilo en cascada", "Sintaxis de estilo de computadora"],
         answer: 1,
         timer: 15
     },
     {
-        question: "Which tag is used to create an unordered list in HTML?",
+        question: "¿Qué etiqueta se utiliza para crear una lista desordenada en HTML?",
         options: ["<ol>", "<li>", "<ul>"],
         answer: 2,
         timer: 15
     },
     {
-        question: "What is the purpose of the <title> tag?",
-        options: ["Defines a heading", "Specifies the page's title in the browser tab", "Creates a link"],
+        question: "¿Cuál es el propósito de la etiqueta <title>?",
+        options: ["Define un encabezado", "Especifica el título de la página en la pestaña del navegador", "Crea un enlace"],
         answer: 1,
         timer: 15
     }
@@ -47,13 +47,18 @@ function startTimer(time) {
         timerEl.textContent = time;
         if (time <= 0) {
             clearInterval(timer);
-            handleAnswer(null); // No answer submitted, mark as incorrect
+            handleAnswer(null); // No se envió respuesta, marcar como incorrecta
         }
     }, 1000);
 }
 
 function displayQuestion() {
     clearInterval(timer);
+    if (currentQuestionIndex >= questions.length) {
+        endQuiz();
+        return;
+    }
+
     const questionData = questions[currentQuestionIndex];
     quizContainer.innerHTML = `
         <div class="question">${questionData.question}</div>
@@ -78,12 +83,13 @@ function handleAnswer(selectedIndex) {
 
     if (selectedIndex === questionData.answer) {
         score++;
-        optionButtons[selectedIndex].classList.add('correct');
+        if (selectedIndex !== null) {
+            optionButtons[selectedIndex].classList.add('correct');
+        }
     } else {
         if (selectedIndex !== null) {
             optionButtons[selectedIndex].classList.add('incorrect');
         }
-        // Show the correct answer
         optionButtons[questionData.answer].classList.add('correct');
     }
 
@@ -96,22 +102,17 @@ function handleAnswer(selectedIndex) {
 
 nextBtn.addEventListener('click', () => {
     currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        displayQuestion();
-    } else {
-        endQuiz();
-    }
+    displayQuestion();
 });
 
 function endQuiz() {
     quizContainer.innerHTML = '';
     nextBtn.style.display = 'none';
     resultsEl.style.display = 'block';
-    resultsEl.innerHTML = `Quiz Complete! You scored ${score} out of ${questions.length}.`;
+    resultsEl.innerHTML = `¡Quiz Completado! Tu puntaje es de ${score} de ${questions.length}.`;
     saveResultsToLocalStorage(score);
 }
 
-// Function to save results (can be improved)
 function saveResultsToLocalStorage(finalScore) {
     let results = JSON.parse(localStorage.getItem('quizResults')) || [];
     results.push({ score: finalScore, timestamp: new Date().toLocaleString() });
